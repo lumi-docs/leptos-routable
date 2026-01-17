@@ -1158,10 +1158,36 @@ fn generate_root_provide_method_with_modules(
 
     quote! {
         impl #enum_ident {
+            /// Provide all route state contexts from an existing store.
+            ///
+            /// This traverses the entire route hierarchy and provides contexts
+            /// for all state types, enabling components to use `expect_context()`.
             pub fn provide_state_contexts(root_store: reactive_stores::Store<#state_store_type>) {
                 use #accessor_trait;
                 leptos::prelude::provide_context(root_store.clone());
                 #(#provide_statements)*
+            }
+
+            /// Provide all route state contexts with default values.
+            ///
+            /// This is primarily useful for testing, where you want all
+            /// `expect_context()` calls to succeed without manually setting up
+            /// each state type. After calling this, you can override specific
+            /// states with `provide_context(custom_state)`.
+            ///
+            /// # Example (in tests)
+            /// ```ignore
+            /// // Provide all defaults
+            /// AppRoutes::provide_all_default_contexts();
+            ///
+            /// // Override just what you need for this test
+            /// provide_context(DashboardState::builder().user(mock_user).build());
+            /// ```
+            pub fn provide_all_default_contexts() {
+                let root_store = reactive_stores::Store::new(
+                    <#state_store_type as Default>::default()
+                );
+                Self::provide_state_contexts(root_store);
             }
         }
     }
