@@ -27,8 +27,8 @@ leptos = { version = "0.8", optional = true }
 leptos_router = { version = "0.8", optional = true }
 
 # Mock leptos (opt-in via mock feature)
-leptos_mock = { package = "leptos", git = "https://github.com/lumi-docs/leptos", branch = "lumi-docs", optional = true }
-leptos_router_mock = { package = "leptos_router", git = "https://github.com/lumi-docs/leptos", branch = "lumi-docs", optional = true }
+leptos_mock = { package = "leptos", git = "https://github.com/lumi-docs/leptos", rev = "e1b6957", optional = true }
+leptos_router_mock = { package = "leptos_router", git = "https://github.com/lumi-docs/leptos", rev = "e1b6957", optional = true }
 
 # Always needed
 leptos-routable-macro.workspace = true
