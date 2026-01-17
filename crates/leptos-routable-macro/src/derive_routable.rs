@@ -1,8 +1,13 @@
+use darling::{FromDeriveInput, FromVariant};
 use proc_macro::TokenStream;
 use proc_macro2::{Span as Span2, TokenStream as TokenStream2};
 use quote::quote;
-use syn::{parse_macro_input, spanned::Spanned, Data::{Enum, Struct, Union}, DeriveInput, Ident, Type, Variant, Fields};
-use darling::{FromDeriveInput, FromVariant};
+use syn::{
+    parse_macro_input,
+    spanned::Spanned,
+    Data::{Enum, Struct, Union},
+    DeriveInput, Fields, Ident, Type, Variant,
+};
 
 /* -------------------------------------------------------------------------------------------------
  * Helper Functions
@@ -37,8 +42,10 @@ trait IntoChildTokens {
 #[derive(std::fmt::Debug, FromVariant)]
 #[darling(attributes(route))]
 struct RouteVariant {
-    #[allow(unused)] ident: Ident,
-    #[allow(unused)] fields: darling::ast::Fields<syn::Type>,
+    #[allow(unused)]
+    ident: Ident,
+    #[allow(unused)]
+    fields: darling::ast::Fields<syn::Type>,
 
     // Arguments
     path: syn::LitStr,
@@ -48,9 +55,9 @@ impl IntoChildTokens for RouteVariant {
     fn into_child_tokens(self, view: TokenStream2) -> Option<TokenStream2> {
         let path = self.path;
         Some(quote! {
-            ::leptos_router::components::Route(
-                ::leptos_router::components::RouteProps::builder()
-                    .path(::leptos_router::path!(#path))
+            ::leptos_routable::leptos_router::components::Route(
+                ::leptos_routable::leptos_router::components::RouteProps::builder()
+                    .path(::leptos_routable::leptos_router::path!(#path))
                     .view(#view)
                     .build())
         })
@@ -63,9 +70,11 @@ impl IntoChildTokens for RouteVariant {
 #[derive(std::fmt::Debug, FromVariant)]
 #[darling(attributes(parent_route))]
 struct ParentRouteVariant {
-    #[allow(unused)] ident: Ident,
+    #[allow(unused)]
+    ident: Ident,
     fields: darling::ast::Fields<syn::Type>,
-    #[allow(unused)] routable: Option<Ident>,
+    #[allow(unused)]
+    routable: Option<Ident>,
 
     // Arguments
     path: syn::LitStr,
@@ -78,7 +87,9 @@ impl IntoChildTokens for ParentRouteVariant {
         let ssr = self.ssr.unwrap_or(syn::parse_quote!(Default::default()));
         // There can only be one, error elsewhere ensures.
         let inner_ident = self.fields.fields.into_iter().next()?;
-        Some(quote! { #inner_ident::parent_route(::leptos_router::path!(#path), #view, #ssr) })
+        Some(
+            quote! { #inner_ident::parent_route(::leptos_routable::leptos_router::path!(#path), #view, #ssr) },
+        )
     }
 }
 
@@ -88,8 +99,10 @@ impl IntoChildTokens for ParentRouteVariant {
 #[derive(std::fmt::Debug, FromVariant)]
 #[darling(attributes(protected_route))]
 struct ProtectedRouteVariant {
-    #[allow(unused)] ident: Ident,
-    #[allow(unused)] fields: darling::ast::Fields<syn::Type>,
+    #[allow(unused)]
+    ident: Ident,
+    #[allow(unused)]
+    fields: darling::ast::Fields<syn::Type>,
 
     // Arguments
     path: syn::LitStr,
@@ -105,9 +118,9 @@ impl IntoChildTokens for ProtectedRouteVariant {
         let redirect_path = self.redirect_path;
         let fallback = self.fallback;
         Some(quote! {
-             ::leptos_router::components::ProtectedRoute(
-                 ::leptos_router::components::ProtectedRouteProps::builder()
-                     .path(::leptos_router::path!(#path))
+             ::leptos_routable::leptos_router::components::ProtectedRoute(
+                 ::leptos_routable::leptos_router::components::ProtectedRouteProps::builder()
+                     .path(::leptos_routable::leptos_router::path!(#path))
                      .view(#view)
                      .condition(#condition)
                      .redirect_path(#redirect_path)
@@ -124,7 +137,8 @@ impl IntoChildTokens for ProtectedRouteVariant {
 #[derive(std::fmt::Debug, FromVariant)]
 #[darling(attributes(protected_parent_route))]
 struct ProtectedParentRouteVariant {
-    #[allow(unused)] ident: Ident,
+    #[allow(unused)]
+    ident: Ident,
     fields: darling::ast::Fields<syn::Type>,
 
     // Arguments
@@ -144,7 +158,9 @@ impl IntoChildTokens for ProtectedParentRouteVariant {
         let ssr = self.ssr.unwrap_or(syn::parse_quote!(Default::default()));
         // There can only be one, error elsewhere ensures.
         let inner_ident = self.fields.fields.into_iter().next()?;
-        Some(quote! { #inner_ident::protected_parent_route(::leptos_router::path!(#path), #view, #condition, #fallback.into(), #redirect_path, #ssr) })
+        Some(
+            quote! { #inner_ident::protected_parent_route(::leptos_routable::leptos_router::path!(#path), #view, #condition, #fallback.into(), #redirect_path, #ssr) },
+        )
     }
 }
 
@@ -169,7 +185,6 @@ pub(crate) struct RoutableConfiguration {
     ident: syn::Ident,
     //#[allow(unused)]
     //attrs: Vec<syn::Attribute>,
-
     #[darling(default)]
     pub(crate) transition: bool,
 
@@ -192,8 +207,10 @@ impl IntoChildTokens for RouteKind {
             Self::Route(route) => route.into_child_tokens(view),
             Self::ParentRoute(parent) => parent.into_child_tokens(view),
             Self::ProtectedRoute(protected) => protected.into_child_tokens(view),
-            Self::ProtectedParentRoute(protected_parent) => protected_parent.into_child_tokens(view),
-            Self::None => None
+            Self::ProtectedParentRoute(protected_parent) => {
+                protected_parent.into_child_tokens(view)
+            }
+            Self::None => None,
         }
     }
 }
@@ -209,25 +226,40 @@ trait FromVariantWithKind: Sized {
 
 // Implement for each variant type
 impl FromVariantWithKind for RouteVariant {
-    fn attr_ident() -> &'static str { "route" }
-    fn into_kind(self) -> RouteKind { RouteKind::Route(self) }
+    fn attr_ident() -> &'static str {
+        "route"
+    }
+    fn into_kind(self) -> RouteKind {
+        RouteKind::Route(self)
+    }
 }
 
 impl FromVariantWithKind for ParentRouteVariant {
-    fn attr_ident() -> &'static str { "parent_route" }
-    fn into_kind(self) -> RouteKind { RouteKind::ParentRoute(self) }
+    fn attr_ident() -> &'static str {
+        "parent_route"
+    }
+    fn into_kind(self) -> RouteKind {
+        RouteKind::ParentRoute(self)
+    }
 }
 
 impl FromVariantWithKind for ProtectedRouteVariant {
-    fn attr_ident() -> &'static str { "protected_route" }
-    fn into_kind(self) -> RouteKind { RouteKind::ProtectedRoute(self) }
+    fn attr_ident() -> &'static str {
+        "protected_route"
+    }
+    fn into_kind(self) -> RouteKind {
+        RouteKind::ProtectedRoute(self)
+    }
 }
 
 impl FromVariantWithKind for ProtectedParentRouteVariant {
-    fn attr_ident() -> &'static str { "protected_parent_route" }
-    fn into_kind(self) -> RouteKind { RouteKind::ProtectedParentRoute(self) }
+    fn attr_ident() -> &'static str {
+        "protected_parent_route"
+    }
+    fn into_kind(self) -> RouteKind {
+        RouteKind::ProtectedParentRoute(self)
+    }
 }
-
 
 macro_rules! try_parse_variants {
     ($variant:expr, $($T:ty),+) => {{
@@ -248,7 +280,6 @@ macro_rules! try_parse_variants {
         found
     }};
 }
-
 
 /* -------------------------------------------------------------------------------------------------
  * RouteKind
@@ -276,15 +307,18 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
     };
 
     // Validate mutual exclusion between module_organization and view_prefix/view_suffix
-    if config.module_organization.is_some() &&
-       (!config.view_prefix.is_empty() || config.view_suffix != "View") {
+    if config.module_organization.is_some()
+        && (!config.view_prefix.is_empty() || config.view_suffix != "View")
+    {
         return syn::Error::new(
             input_ast.span(),
             "Cannot use both `module_organization` and `view_prefix`/`view_suffix`. \
              When `module_organization` is enabled, views are automatically discovered from \
              the module structure using fixed names (View/Layout). \
-             Remove `view_prefix` and `view_suffix` attributes when using `module_organization`."
-        ).to_compile_error().into();
+             Remove `view_prefix` and `view_suffix` attributes when using `module_organization`.",
+        )
+        .to_compile_error()
+        .into();
     }
 
     let data = match input_ast.data {
@@ -294,8 +328,8 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                 input_ast.span(),
                 "`#[derive(Routable)]` can only be used on enums.",
             )
-                .to_compile_error()
-                .into();
+            .to_compile_error()
+            .into();
         }
     };
 
@@ -304,11 +338,11 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
 
     // Determine if we need state support (only with module_organization)
     let state_store_type = config.state_suffix.as_ref().and_then(|_suffix| {
-        config.module_organization.as_ref().map(|module_prefix| {
-            crate::utils::build_root_state_path(module_prefix)
-        })
+        config
+            .module_organization
+            .as_ref()
+            .map(|module_prefix| crate::utils::build_root_state_path(module_prefix))
     });
-
 
     for variant in &data.variants {
         let route_kind = match parse_variant(variant) {
@@ -323,12 +357,15 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             crate::utils::build_module_view_path(&variant.ident, is_parent, module_prefix)
         } else {
             // Traditional view naming with prefix/suffix
-            let view_ident = crate::utils::build_variant_view_name(&config.ident, &variant.ident, &config);
+            let view_ident =
+                crate::utils::build_variant_view_name(&config.ident, &variant.ident, &config);
             quote! { #view_ident }
         };
 
         match parse_fallback_attrs(variant, input_ast.span(), &fallback) {
-            Ok(()) => { fallback = Some(view_path.clone()); }
+            Ok(()) => {
+                fallback = Some(view_path.clone());
+            }
             Err(err) => return err.to_compile_error().into(),
         }
 
@@ -349,8 +386,8 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                 input_ast.span(),
                 "No variant is marked with `#[fallback]`. Exactly one is required.",
             )
-                .to_compile_error()
-                .into();
+            .to_compile_error()
+            .into();
         }
     };
     let enum_ident = config.ident;
@@ -376,15 +413,17 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             // Build paths to modules (not types within them)
             let types_module: TokenStream2 = format!(
                 "crate::{}::{}::types",
-                module_prefix_normalized,
-                variant_snake
-            ).parse().unwrap();
+                module_prefix_normalized, variant_snake
+            )
+            .parse()
+            .unwrap();
 
             let styles_module: TokenStream2 = format!(
                 "crate::{}::{}::styles",
-                module_prefix_normalized,
-                variant_snake
-            ).parse().unwrap();
+                module_prefix_normalized, variant_snake
+            )
+            .parse()
+            .unwrap();
 
             // Check that modules exist by referencing them with a use statement attempt
             all_checks.push(quote! {
@@ -400,7 +439,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                 let variant_state_path = crate::utils::build_module_state_path(
                     &variant.ident,
                     false, // is_sub_state = false
-                    module_prefix
+                    module_prefix,
                 );
 
                 // Check that the state type exists
@@ -414,7 +453,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                     let sub_state_path = crate::utils::build_module_state_path(
                         &variant.ident,
                         true, // is_sub_state = true
-                        module_prefix
+                        module_prefix,
                     );
 
                     all_checks.push(quote! {
@@ -456,11 +495,8 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
 
         // Generate impl for each route's state type (uses Field<T>)
         for variant in &data.variants {
-            let state_type = crate::utils::build_module_state_path(
-                &variant.ident,
-                false,
-                module_prefix
-            );
+            let state_type =
+                crate::utils::build_module_state_path(&variant.ident, false, module_prefix);
 
             helper_impls.push(quote! {
                 impl #state_type {
@@ -477,11 +513,8 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
 
             // If it's a parent route, also generate helpers for SubState
             if matches!(&variant.fields, syn::Fields::Unnamed(_)) {
-                let sub_state_type = crate::utils::build_module_state_path(
-                    &variant.ident,
-                    true,
-                    module_prefix
-                );
+                let sub_state_type =
+                    crate::utils::build_module_state_path(&variant.ident, true, module_prefix);
 
                 helper_impls.push(quote! {
                     impl #sub_state_type {
@@ -508,7 +541,8 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
     // Generate state initialization for routes() method (only for root enum with module_organization)
     let state_init = if let Some(ref state_store_type) = state_store_type {
         if let Some(module_prefix) = config.module_organization.as_ref() {
-            let (accessor_trait, provide_statements) = generate_recursive_provides(data, quote! { __root_store }, module_prefix);
+            let (accessor_trait, provide_statements) =
+                generate_recursive_provides(data, quote! { __root_store }, module_prefix);
 
             quote! {
                 use #accessor_trait;
@@ -527,16 +561,22 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
     // Generate state provider methods
     // 1. Generate __provide_contexts for nested enums (those WITHOUT state_suffix) - only for module-based state
     // 2. Generate provide_state_contexts for root enum (one WITH state_suffix)
-    let nested_provide_method = if state_store_type.is_none() && config.module_organization.is_some() {
-        let module_prefix = config.module_organization.as_ref().unwrap();
-        generate_nested_provide_method_with_modules(&enum_ident, data, module_prefix)
-    } else {
-        quote! {}
-    };
+    let nested_provide_method =
+        if state_store_type.is_none() && config.module_organization.is_some() {
+            let module_prefix = config.module_organization.as_ref().unwrap();
+            generate_nested_provide_method_with_modules(&enum_ident, data, module_prefix)
+        } else {
+            quote! {}
+        };
 
     let root_provide_method = if let Some(ref state_store_type) = state_store_type {
         let module_prefix = config.module_organization.as_ref().unwrap(); // state_store_type only set when module_organization exists
-        generate_root_provide_method_with_modules(&enum_ident, data, state_store_type, module_prefix)
+        generate_root_provide_method_with_modules(
+            &enum_ident,
+            data,
+            state_store_type,
+            module_prefix,
+        )
     } else {
         quote! {}
     };
@@ -560,15 +600,15 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             /* -------------------------------------------------------------------------------------
              * `Routes` implementation
              * -----------------------------------------------------------------------------------*/
-            fn routes() -> impl ::leptos::IntoView {
+            fn routes() -> impl ::leptos_routable::leptos::IntoView {
                 #state_init
 
-                ::leptos_router::components::Routes(
-                    ::leptos_router::components::RoutesProps::builder()
+                ::leptos_routable::leptos_router::components::Routes(
+                    ::leptos_routable::leptos_router::components::RoutesProps::builder()
                         .transition(#transition)
                         .fallback(#fallback)
                         .children(
-                            ::leptos::children::ToChildren::to_children(move || {
+                            ::leptos_routable::leptos::children::ToChildren::to_children(move || {
                                 (#(#children),*)
                             })
                         )
@@ -579,15 +619,15 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             /* -------------------------------------------------------------------------------------
              * `FlatRoutes` implementation
              * -----------------------------------------------------------------------------------*/
-            fn flat_routes() -> impl ::leptos::IntoView {
+            fn flat_routes() -> impl ::leptos_routable::leptos::IntoView {
                 #state_init
 
-                ::leptos_router::components::FlatRoutes(
-                    ::leptos_router::components::FlatRoutesProps::builder()
+                ::leptos_routable::leptos_router::components::FlatRoutes(
+                    ::leptos_routable::leptos_router::components::FlatRoutesProps::builder()
                         .transition(#transition)
                         .fallback(#fallback)
                         .children(
-                            ::leptos::children::ToChildren::to_children(move || {
+                            ::leptos_routable::leptos::children::ToChildren::to_children(move || {
                                 (#(#children),*)
                             })
                         )
@@ -598,7 +638,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             /* -------------------------------------------------------------------------------------
              * `Fallback` implementation
              * -----------------------------------------------------------------------------------*/
-            fn fallback() -> impl ::leptos::IntoView {
+            fn fallback() -> impl ::leptos_routable::leptos::IntoView {
                 #fallback
             }
 
@@ -611,24 +651,24 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
             >(
                 path: Path,
                 view: View,
-                ssr: ::leptos_router::SsrMode,
-            ) -> impl ::leptos_router::MatchNestedRoutes + Clone
+                ssr: ::leptos_routable::leptos_router::SsrMode,
+            ) -> impl ::leptos_routable::leptos_router::MatchNestedRoutes + Clone
             where
                 Path: Send
                     + Sync
                     + 'static
                     + Clone
                     + std::fmt::Debug
-                    + ::leptos_router::PossibleRouteMatch,
-                View: ::leptos_router::ChooseView,
+                    + ::leptos_routable::leptos_router::PossibleRouteMatch,
+                View: ::leptos_routable::leptos_router::ChooseView,
             {
-                ::leptos_router::components::ParentRoute(
-                    ::leptos_router::components::ParentRouteProps::builder()
+                ::leptos_routable::leptos_router::components::ParentRoute(
+                    ::leptos_routable::leptos_router::components::ParentRouteProps::builder()
                         .path(path)
                         .view(view)
                         .ssr(ssr)
                         .children(
-                            ::leptos::children::ToChildren::to_children(move || {
+                            ::leptos_routable::leptos::children::ToChildren::to_children(move || {
                                 (#(#children),*)
                             })
                         )
@@ -650,32 +690,32 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                 path: Path,
                 view: ViewFn,
                 condition: ConditionFn,
-                fallback: ::leptos::children::ViewFn,
+                fallback: ::leptos_routable::leptos::children::ViewFn,
                 redirect_path: RedirectPathFn,
-                ssr: ::leptos_router::SsrMode,
-            ) -> impl ::leptos_router::MatchNestedRoutes + Clone
+                ssr: ::leptos_routable::leptos_router::SsrMode,
+            ) -> impl ::leptos_routable::leptos_router::MatchNestedRoutes + Clone
             where
                 Path: Send
                     + Sync
                     + 'static
                     + Clone
                     + std::fmt::Debug
-                    + ::leptos_router::PossibleRouteMatch,
+                    + ::leptos_routable::leptos_router::PossibleRouteMatch,
                 ViewFn: Fn() -> View + Send + Clone + 'static,
-                View: ::leptos::IntoView + 'static,
+                View: ::leptos_routable::leptos::IntoView + 'static,
                 ConditionFn: Fn() -> Option<bool> + Send + Clone + 'static,
                 RedirectPathFn: Fn() -> RedirectPath + Send + Clone + 'static,
                 RedirectPath: ::std::fmt::Display + 'static,
             {
-                ::leptos_router::components::ProtectedParentRoute(
-                    ::leptos_router::components::ProtectedParentRouteProps::builder()
+                ::leptos_routable::leptos_router::components::ProtectedParentRoute(
+                    ::leptos_routable::leptos_router::components::ProtectedParentRouteProps::builder()
                         .path(path)
                         .view(view)
                         .condition(condition)
                         .fallback(fallback)
                         .redirect_path(redirect_path)
                         .children(
-                            ::leptos::children::ToChildren::to_children(move || {
+                            ::leptos_routable::leptos::children::ToChildren::to_children(move || {
                                 (#(#children),*)
                             })
                         )
@@ -686,10 +726,11 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
         }
     };
 
-    let to_href_display_impl = match crate::to_href_display::generate_to_href_display_impl(&enum_ident, data) {
-        Ok(ts) => ts,
-        Err(e) => return e.to_compile_error().into(),
-    };
+    let to_href_display_impl =
+        match crate::to_href_display::generate_to_href_display_impl(&enum_ident, data) {
+            Ok(ts) => ts,
+            Err(e) => return e.to_compile_error().into(),
+        };
 
     let from_str_impl = match generate_from_str_impl(&enum_ident, data) {
         Ok(ts) => ts,
@@ -738,7 +779,8 @@ fn generate_from_str_impl(
         };
 
         let segments = crate::to_href_display::parse_segments(&route_path);
-        let pattern_match = generate_pattern_match(&segments, &variant.fields, enum_ident, variant_ident)?;
+        let pattern_match =
+            generate_pattern_match(&segments, &variant.fields, enum_ident, variant_ident)?;
         match_arms.push(pattern_match);
     }
 
@@ -774,7 +816,9 @@ fn generate_from_asref_str_impl(
     data: &syn::DataEnum,
 ) -> proc_macro2::TokenStream {
     // Find the fallback variant
-    let fallback_variant = data.variants.iter()
+    let fallback_variant = data
+        .variants
+        .iter()
         .find(|v| v.attrs.iter().any(|attr| attr.path().is_ident("fallback")))
         .map(|v| &v.ident);
 
@@ -868,7 +912,8 @@ fn generate_pattern_match(
     };
 
     // Build the variant constructor
-    let variant_constructor = build_variant_constructor(enum_ident, variant_ident, fields, segments, nested_field_ty)?;
+    let variant_constructor =
+        build_variant_constructor(enum_ident, variant_ident, fields, segments, nested_field_ty)?;
 
     // Build complete matching logic
     let max_segments_val = syn::Index::from(segment_idx);
@@ -938,8 +983,8 @@ fn generate_query_param_parsers(
     let mut used_fields = std::collections::HashSet::new();
     for seg in segments {
         match seg {
-            crate::to_href_display::RouteSegment::Param(name) |
-            crate::to_href_display::RouteSegment::OptionalParam(name) => {
+            crate::to_href_display::RouteSegment::Param(name)
+            | crate::to_href_display::RouteSegment::OptionalParam(name) => {
                 used_fields.insert(name.clone());
             }
             _ => {}
@@ -989,8 +1034,10 @@ fn build_variant_constructor(
 
                 // Check if field is used in path
                 let in_path = segments.iter().any(|seg| match seg {
-                    crate::to_href_display::RouteSegment::Param(name) |
-                    crate::to_href_display::RouteSegment::OptionalParam(name) => name == &field_name_str,
+                    crate::to_href_display::RouteSegment::Param(name)
+                    | crate::to_href_display::RouteSegment::OptionalParam(name) => {
+                        name == &field_name_str
+                    }
                     _ => false,
                 });
 
@@ -1076,15 +1123,15 @@ fn generate_nested_provide_method_with_modules(
     data: &syn::DataEnum,
     module_prefix: &str,
 ) -> TokenStream2 {
-    let (accessor_trait, provide_statements) = generate_recursive_provides(data, quote! { parent_sub_state }, module_prefix);
+    let (accessor_trait, provide_statements) =
+        generate_recursive_provides(data, quote! { parent_sub_state }, module_prefix);
 
     // Build SubState path directly from module_prefix
     // For "routes/dashboard/sub_routes", SubState is at "routes/dashboard/sub_routes/state::State"
     let module_prefix_normalized = module_prefix.replace('/', "::");
-    let sub_state_path: TokenStream2 = format!(
-        "crate::{}::state::State",
-        module_prefix_normalized
-    ).parse().unwrap();
+    let sub_state_path: TokenStream2 = format!("crate::{}::state::State", module_prefix_normalized)
+        .parse()
+        .unwrap();
 
     quote! {
         impl #enum_ident {
@@ -1106,7 +1153,8 @@ fn generate_root_provide_method_with_modules(
     state_store_type: &TokenStream2,
     module_prefix: &str,
 ) -> TokenStream2 {
-    let (accessor_trait, provide_statements) = generate_recursive_provides(data, quote! { root_store }, module_prefix);
+    let (accessor_trait, provide_statements) =
+        generate_recursive_provides(data, quote! { root_store }, module_prefix);
 
     quote! {
         impl #enum_ident {
@@ -1129,22 +1177,19 @@ fn generate_recursive_provides(
 
     // Build the StateStoreFields trait path for the accessor to import
     let accessor_state_module = module_prefix.replace('/', "::");
-    let accessor_trait: TokenStream2 = format!(
-        "crate::{}::state::StateStoreFields",
-        accessor_state_module
-    ).parse().unwrap();
+    let accessor_trait: TokenStream2 =
+        format!("crate::{}::state::StateStoreFields", accessor_state_module)
+            .parse()
+            .unwrap();
 
     for variant in &data.variants {
         let field_name = syn::Ident::new(
             &to_snake_case(&variant.ident.to_string()),
-            variant.ident.span()
+            variant.ident.span(),
         );
 
-        let state_type = crate::utils::build_module_state_path(
-            &variant.ident,
-            false,
-            module_prefix
-        );
+        let state_type =
+            crate::utils::build_module_state_path(&variant.ident, false, module_prefix);
 
         statements.push(quote! {
             leptos::prelude::provide_context(
@@ -1155,23 +1200,25 @@ fn generate_recursive_provides(
         });
 
         if let syn::Fields::Unnamed(fields) = &variant.fields {
-            if let Some(syn::Field { ty: syn::Type::Path(type_path), .. }) = fields.unnamed.first() {
+            if let Some(syn::Field {
+                ty: syn::Type::Path(type_path),
+                ..
+            }) = fields.unnamed.first()
+            {
                 if let Some(nested_enum) = type_path.path.segments.last() {
                     let nested_enum_ident = &nested_enum.ident;
 
-                    let sub_state_type = crate::utils::build_module_state_path(
-                        &variant.ident,
-                        true,
-                        module_prefix
-                    );
+                    let sub_state_type =
+                        crate::utils::build_module_state_path(&variant.ident, true, module_prefix);
 
                     // Build trait path for variant's state
                     let variant_snake = to_snake_case(&variant.ident.to_string());
                     let variant_state_trait: TokenStream2 = format!(
                         "crate::{}::{}::state::StateStoreFields",
-                        accessor_state_module,
-                        variant_snake
-                    ).parse().unwrap();
+                        accessor_state_module, variant_snake
+                    )
+                    .parse()
+                    .unwrap();
 
                     statements.push(quote! {
                         {
@@ -1218,7 +1265,8 @@ fn multiple_route_error(variant: &syn::Variant) -> darling::Error {
         variant.span(),
         "Multiple route-like attributes found. Only one of `#[route]`, `#[parent_route]`, \
          `#[protected_route]`, or `#[protected_parent_route]` is allowed.",
-    ).into()
+    )
+    .into()
 }
 
 #[allow(unused)]

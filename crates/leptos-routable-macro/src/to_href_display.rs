@@ -1,8 +1,5 @@
 use quote::quote;
-use syn::{
-    spanned::Spanned, Attribute, Error, Fields, Ident, LitStr,
-    Type, Variant,
-};
+use syn::{spanned::Spanned, Attribute, Error, Fields, Ident, LitStr, Type, Variant};
 
 struct FieldMeta {
     name: String,
@@ -34,13 +31,19 @@ fn extract_variant_fields(
             if count == 0 {
                 return Err(Error::new(
                     unnamed.span(),
-                    format!("Variant `{}` has 0 fields, expected 1 for nested routing.", variant_ident),
+                    format!(
+                        "Variant `{}` has 0 fields, expected 1 for nested routing.",
+                        variant_ident
+                    ),
                 ));
             }
             if count > 1 {
                 return Err(Error::new(
                     unnamed.span(),
-                    format!("Variant `{}` has {} fields, but only 1 is allowed for nested routing.", variant_ident, count),
+                    format!(
+                        "Variant `{}` has {} fields, but only 1 is allowed for nested routing.",
+                        variant_ident, count
+                    ),
                 ));
             }
             let only_field = &unnamed.unnamed[0];
@@ -79,13 +82,19 @@ fn validate_path_and_fields(
                 let Some(field_meta) = fields.iter().find(|f| f.name == *name) else {
                     return Err(Error::new(
                         variant_ident.span(),
-                        format!("Optional param `:{}?` not found in `{}`.", name, variant_ident),
+                        format!(
+                            "Optional param `:{}?` not found in `{}`.",
+                            name, variant_ident
+                        ),
                     ));
                 };
                 if !is_option_type(&field_meta.ty) {
                     return Err(Error::new(
                         field_meta.span,
-                        format!("`:{}?` in route requires `Option<T>` field for `{}`.", name, variant_ident),
+                        format!(
+                            "`:{}?` in route requires `Option<T>` field for `{}`.",
+                            name, variant_ident
+                        ),
                     ));
                 }
             }
@@ -104,7 +113,10 @@ fn validate_path_and_fields(
         if !used_fields.contains(&f.name) && !is_option_type(&f.ty) {
             return Err(Error::new(
                 f.span,
-                format!("Field `{}` not used in path, so must be `Option<T>` to appear as a query.", f.name),
+                format!(
+                    "Field `{}` not used in path, so must be `Option<T>` to appear as a query.",
+                    f.name
+                ),
             ));
         }
     }
@@ -242,7 +254,9 @@ pub(crate) fn parse_segments(route: &str) -> Vec<RouteSegment> {
                     stripped.trim_start_matches(':').to_string(),
                 ));
             } else {
-                segs.push(RouteSegment::Param(part.trim_start_matches(':').to_string()));
+                segs.push(RouteSegment::Param(
+                    part.trim_start_matches(':').to_string(),
+                ));
             }
         } else if !part.is_empty() {
             segs.push(RouteSegment::Static(part.to_string()));
@@ -266,7 +280,8 @@ pub(crate) fn find_route_path(attrs: &[Attribute]) -> Option<String> {
         if attr.path().is_ident("route")
             || attr.path().is_ident("parent_route")
             || attr.path().is_ident("protected_route")
-            || attr.path().is_ident("protected_parent_route")  {
+            || attr.path().is_ident("protected_parent_route")
+        {
             let mut path = None;
             let _ = attr.parse_nested_meta(|meta| {
                 if meta.path.is_ident("path") {
@@ -289,7 +304,12 @@ pub(crate) fn generate_to_href_display_impl(
     let mut match_arms = Vec::new();
 
     for variant in &data.variants {
-        let Variant { ident, fields, attrs, .. } = variant;
+        let Variant {
+            ident,
+            fields,
+            attrs,
+            ..
+        } = variant;
         let route_path = match find_route_path(attrs) {
             Some(p) if !p.is_empty() => p,
             _ => {
@@ -343,7 +363,7 @@ pub(crate) fn generate_to_href_display_impl(
             }
         }
 
-        impl ::leptos_router::components::ToHref for #enum_ident {
+        impl ::leptos_routable::leptos_router::components::ToHref for #enum_ident {
             fn to_href(&self) -> Box<dyn Fn() -> String + '_> {
                 let owned_self = self.clone();
                 Box::new(move || {
@@ -357,4 +377,3 @@ pub(crate) fn generate_to_href_display_impl(
     };
     Ok(impl_ts)
 }
-

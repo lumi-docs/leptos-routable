@@ -105,10 +105,7 @@ macro_rules! define_typed_param_type {
             pub fn new(key: &'static str) -> Self {
                 let map_memo = $map_fn();
                 let memo = Memo::new(move |_| {
-                    let raw = map_memo
-                        .get()
-                        .get_str(key)
-                        .map(|s| s.to_string());
+                    let raw = map_memo.get().get_str(key).map(|s| s.to_string());
 
                     match raw {
                         None => ParamValue::Missing,

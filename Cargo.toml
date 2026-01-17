@@ -16,8 +16,8 @@ description = "Type-safe routing utility for Leptos with zero-string path genera
 
 [workspace.dependencies]
 leptos-routable = { path = "./crates/leptos-routable" }
-leptos = "0.8"
-leptos_router = "0.8"
-leptos_meta = "0.8"
+leptos = "0.8.15"
+leptos_router = "0.8.10"
+leptos_meta = "0.8.5"
 thiserror = "2.0.11"
 leptos-routable-macro = { path = "./crates/leptos-routable-macro" }

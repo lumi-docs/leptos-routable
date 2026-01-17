@@ -3,8 +3,33 @@ name = "leptos-routable"
 version.workspace = true
 edition.workspace = true
 
+[features]
+default = ["standard-leptos"]
+
+# Standard leptos ecosystem from crates.io
+standard-leptos = [
+    "dep:leptos",
+    "dep:leptos_router",
+]
+
+# Mock DOM testing - uses lumi-docs fork with mock_dom support
+# Usage: --no-default-features --features mock
+mock = [
+    "dep:leptos_mock",
+    "dep:leptos_router_mock",
+    "leptos_mock/mock_dom",
+    "leptos_router_mock/mock_dom",
+]
+
 [dependencies]
-leptos.workspace = true
-leptos_router.workspace = true
+# Standard leptos (default)
+leptos = { version = "0.8", optional = true }
+leptos_router = { version = "0.8", optional = true }
+
+# Mock leptos (opt-in via mock feature)
+leptos_mock = { package = "leptos", git = "https://github.com/lumi-docs/leptos", branch = "lumi-docs", optional = true }
+leptos_router_mock = { package = "leptos_router", git = "https://github.com/lumi-docs/leptos", branch = "lumi-docs", optional = true }
+
+# Always needed
 leptos-routable-macro.workspace = true
 thiserror.workspace = true
