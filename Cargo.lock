@@ -49,7 +49,7 @@ dependencies = [
 [[package]]
 name = "any_spawner"
 version = "0.3.0"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "futures",
  "thiserror 2.0.17",
@@ -389,7 +389,7 @@ checksum = "f67855af358fcb20fac58f9d714c94e2b228fe5694c1c9b4ead4a366343eda1b"
 [[package]]
 name = "const_str_slice_concat"
 version = "0.1.0"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 
 [[package]]
 name = "convert_case"
@@ -695,7 +695,7 @@ dependencies = [
 [[package]]
 name = "either_of"
 version = "0.1.6"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "paste",
  "pin-project-lite",
@@ -995,13 +995,13 @@ dependencies = [
 [[package]]
 name = "hydration_context"
 version = "0.3.0"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "futures",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "pin-project-lite",
  "serde",
- "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
 ]
 
 [[package]]
@@ -1219,33 +1219,33 @@ dependencies = [
 [[package]]
 name = "leptos"
 version = "0.8.15"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "cfg-if",
- "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "futures",
- "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_config 0.8.8 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_dom 0.8.7 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_hot_reload 0.8.5 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_macro 0.8.14 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_server 0.8.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "oco_ref 0.2.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_config 0.8.8 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_dom 0.8.7 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_hot_reload 0.8.5 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_macro 0.8.14 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_server 0.8.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "oco_ref 0.2.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "paste",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "rustc-hash",
  "rustc_version",
  "send_wrapper",
  "serde",
  "serde_json",
  "serde_qs",
- "server_fn 0.8.9 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "server_fn 0.8.9 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "slotmap",
- "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "thiserror 2.0.17",
- "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "typed-builder 0.23.2",
  "typed-builder-macro 0.23.2",
  "wasm-bindgen",
@@ -1259,10 +1259,10 @@ name = "leptos-routable"
 version = "0.2.0"
 dependencies = [
  "leptos 0.8.15 (registry+https://github.com/rust-lang/crates.io-index)",
- "leptos 0.8.15 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "leptos 0.8.15 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "leptos-routable-macro",
  "leptos_router 0.8.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "leptos_router 0.8.11 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "leptos_router 0.8.11 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "thiserror 2.0.17",
 ]
 
@@ -1295,7 +1295,7 @@ dependencies = [
 [[package]]
 name = "leptos_config"
 version = "0.8.8"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "config",
  "regex",
@@ -1322,13 +1322,13 @@ dependencies = [
 [[package]]
 name = "leptos_dom"
 version = "0.8.7"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "js-sys",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "send_wrapper",
- "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "wasm-bindgen",
  "web-sys",
 ]
@@ -1354,12 +1354,12 @@ dependencies = [
 [[package]]
 name = "leptos_hot_reload"
 version = "0.8.5"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "anyhow",
  "camino",
  "indexmap",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "proc-macro2",
  "quote",
  "rstml",
@@ -1394,21 +1394,21 @@ dependencies = [
 [[package]]
 name = "leptos_macro"
 version = "0.8.14"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "attribute-derive",
  "cfg-if",
  "convert_case 0.10.0",
  "html-escape",
  "itertools 0.14.0",
- "leptos_hot_reload 0.8.5 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "leptos_hot_reload 0.8.5 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "prettyplease",
  "proc-macro-error2",
  "proc-macro2",
  "quote",
  "rstml",
  "rustc_version",
- "server_fn_macro 0.8.8 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "server_fn_macro 0.8.8 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "syn 2.0.114",
  "uuid",
 ]
@@ -1455,20 +1455,20 @@ dependencies = [
 [[package]]
 name = "leptos_router"
 version = "0.8.11"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "futures",
  "gloo-net",
  "js-sys",
- "leptos 0.8.15 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "leptos_router_macro 0.8.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "leptos 0.8.15 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "leptos_router_macro 0.8.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "rustc_version",
  "send_wrapper",
- "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "thiserror 2.0.17",
  "url",
  "wasm-bindgen",
@@ -1490,7 +1490,7 @@ dependencies = [
 [[package]]
 name = "leptos_router_macro"
 version = "0.8.6"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "proc-macro-error2",
  "proc-macro2",
@@ -1521,20 +1521,20 @@ dependencies = [
 [[package]]
 name = "leptos_server"
 version = "0.8.6"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "base64",
  "codee",
  "futures",
- "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "send_wrapper",
  "serde",
  "serde_json",
- "server_fn 0.8.9 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "server_fn 0.8.9 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "tachys 0.2.11 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
 ]
 
 [[package]]
@@ -1670,7 +1670,7 @@ checksum = "60993920e071b0c9b66f14e2b32740a4e27ffc82854dcd72035887f336a09a28"
 [[package]]
 name = "next_tuple"
 version = "0.1.0"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 
 [[package]]
 name = "nu-ansi-term"
@@ -1714,7 +1714,7 @@ dependencies = [
 [[package]]
 name = "oco_ref"
 version = "0.2.1"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "serde",
  "thiserror 2.0.17",
@@ -1741,7 +1741,7 @@ checksum = "8c04f5d74368e4d0dfe06c45c8627c81bd7c317d52762d118fb9b3076f6420fd"
 [[package]]
 name = "or_poisoned"
 version = "0.1.0"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 
 [[package]]
 name = "outref"
@@ -2131,15 +2131,15 @@ dependencies = [
 [[package]]
 name = "reactive_graph"
 version = "0.2.12"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "async-lock",
  "futures",
  "guardian",
- "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "hydration_context 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "indexmap",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "paste",
  "pin-project-lite",
  "rustc-hash",
@@ -2188,15 +2188,15 @@ dependencies = [
 [[package]]
 name = "reactive_stores"
 version = "0.3.1"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "dashmap 6.1.0",
  "guardian",
  "itertools 0.14.0",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "paste",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "reactive_stores_macro 0.2.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "reactive_stores_macro 0.2.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "rustc-hash",
  "send_wrapper",
 ]
@@ -2217,7 +2217,7 @@ dependencies = [
 [[package]]
 name = "reactive_stores_macro"
 version = "0.2.6"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "convert_case 0.10.0",
  "proc-macro-error2",
@@ -2482,7 +2482,7 @@ dependencies = [
 [[package]]
 name = "server_fn"
 version = "0.8.9"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "base64",
  "bytes",
@@ -2500,9 +2500,9 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_qs",
- "server_fn_macro_default 0.8.5 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "server_fn_macro_default 0.8.5 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "thiserror 2.0.17",
- "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "url",
  "wasm-bindgen",
  "wasm-bindgen-futures",
@@ -2529,7 +2529,7 @@ dependencies = [
 [[package]]
 name = "server_fn_macro"
 version = "0.8.8"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "const_format",
  "convert_case 0.10.0",
@@ -2553,9 +2553,9 @@ dependencies = [
 [[package]]
 name = "server_fn_macro_default"
 version = "0.8.5"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "server_fn_macro 0.8.8 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "server_fn_macro 0.8.8 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "syn 2.0.114",
 ]
 
@@ -2718,13 +2718,13 @@ dependencies = [
 [[package]]
 name = "tachys"
 version = "0.2.11"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
- "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "any_spawner 0.3.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "async-trait",
- "const_str_slice_concat 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "const_str_slice_concat 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "drain_filter_polyfill",
- "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "either_of 0.1.6 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "erased",
  "futures",
  "html-escape",
@@ -2733,17 +2733,17 @@ dependencies = [
  "js-sys",
  "lightningcss",
  "linear-map",
- "next_tuple 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "oco_ref 0.2.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "next_tuple 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "oco_ref 0.2.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "or_poisoned 0.1.0 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "paste",
- "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
- "reactive_stores 0.3.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "reactive_graph 0.2.12 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
+ "reactive_stores 0.3.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "rustc-hash",
  "rustc_version",
  "send_wrapper",
  "slotmap",
- "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?branch=lumi-docs)",
+ "throw_error 0.3.1 (git+https://github.com/lumi-docs/leptos?rev=e1b6957)",
  "wasm-bindgen",
  "web-sys",
 ]
@@ -2816,7 +2816,7 @@ dependencies = [
 [[package]]
 name = "throw_error"
 version = "0.3.1"
-source = "git+https://github.com/lumi-docs/leptos?branch=lumi-docs#bb7fb27d3353952a57675c11d3a4a1585b584307"
+source = "git+https://github.com/lumi-docs/leptos?rev=e1b6957#e1b6957821f14d8a93401e2cc7da47be41151d46"
 dependencies = [
  "pin-project-lite",
 ]
