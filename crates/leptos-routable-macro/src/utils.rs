@@ -1,6 +1,7 @@
 use syn::{parse2, File};
 use proc_macro2::{TokenStream as TokenStream2};
 use prettyplease::unparse;
+use quote::quote;
 
 #[allow(unused)]
 pub(crate) fn format_generated_code(expanded: TokenStream2) -> TokenStream2 {
@@ -127,4 +128,35 @@ pub(crate) fn build_root_state_path(module_prefix: &str) -> TokenStream2 {
         "crate::{}::state::State",
         module_prefix_normalized
     ).parse().unwrap()
+}
+
+/// Chunks children into nested tuples when count exceeds 16.
+///
+/// This works around Rust's tuple trait implementation limits.
+/// The `MatchNestedRoutes` trait is only implemented for tuples up to 16 elements,
+/// but it's also implemented for tuples of tuples, allowing unlimited nesting.
+///
+/// # Examples
+/// - 5 routes:  `(R1, R2, R3, R4, R5)`
+/// - 17 routes: `((R1, ..., R16), (R17,))`
+/// - 33 routes: `((R1, ..., R16), (R17, ..., R32), (R33,))`
+pub(crate) fn chunk_children_tokens(children: &[TokenStream2]) -> TokenStream2 {
+    const MAX_TUPLE_SIZE: usize = 16;
+
+    if children.is_empty() {
+        quote! { () }
+    } else if children.len() <= MAX_TUPLE_SIZE {
+        // Single flat tuple - no chunking needed
+        quote! { (#(#children),*) }
+    } else {
+        // Chunk into nested tuples to work around trait implementation limits
+        let chunks: Vec<TokenStream2> = children
+            .chunks(MAX_TUPLE_SIZE)
+            .map(|chunk| {
+                let chunk = chunk.to_vec();
+                quote! { (#(#chunk),*) }
+            })
+            .collect();
+        quote! { (#(#chunks),*) }
+    }
 }

@@ -342,6 +342,9 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
         }
     }
 
+    // Chunk children into nested tuples if > 16 to work around Rust's tuple trait limits
+    let children_tokens = crate::utils::chunk_children_tokens(&children);
+
     let fallback = match fallback {
         Some(f) => f,
         None => {
@@ -569,7 +572,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                         .fallback(#fallback)
                         .children(
                             ::leptos::children::ToChildren::to_children(move || {
-                                (#(#children),*)
+                                #children_tokens
                             })
                         )
                         .build()
@@ -588,7 +591,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                         .fallback(#fallback)
                         .children(
                             ::leptos::children::ToChildren::to_children(move || {
-                                (#(#children),*)
+                                #children_tokens
                             })
                         )
                         .build()
@@ -629,7 +632,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                         .ssr(ssr)
                         .children(
                             ::leptos::children::ToChildren::to_children(move || {
-                                (#(#children),*)
+                                #children_tokens
                             })
                         )
                         .build()
@@ -676,7 +679,7 @@ pub fn derive_routable_impl(input: TokenStream) -> TokenStream {
                         .redirect_path(redirect_path)
                         .children(
                             ::leptos::children::ToChildren::to_children(move || {
-                                (#(#children),*)
+                                #children_tokens
                             })
                         )
                         .ssr(ssr)
