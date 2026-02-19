@@ -9,5 +9,5 @@ leptos = { version = "0.8" }
 leptos_router = { version = "0.8" }
 leptos_meta = { version = "0.8" }
 leptos-routable = { path = "../../crates/leptos-routable" }
-reactive_stores = "0.2"
+reactive_stores = "0.3"
 console_error_panic_hook = "0.1"

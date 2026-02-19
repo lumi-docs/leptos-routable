@@ -7,5 +7,5 @@ edition.workspace = true
 leptos.workspace = true
 leptos_router.workspace = true
 leptos-routable.workspace = true
-reactive_stores = "0.2"
+reactive_stores = "0.3"
 console_error_panic_hook = "0.1"
